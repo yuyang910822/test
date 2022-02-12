@@ -1,0 +1,8 @@
+requests:
+  pip install requests
+
+pymysql:
+  pip install pymysql
+
+yaml:
+  pip install pyyaml
