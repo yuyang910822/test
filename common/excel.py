@@ -39,5 +39,9 @@ class DoExcel:
 
 
 if __name__ == "__main__":
-     a = DoExcel(r"C:\Users\yuyang\Desktop\边拣边分模板 .xlsx","Sheet1")
-     a.workbook.save(r"C:\Users\yuyang\Desktop\边拣边分模板1.xlsx")
+     a = DoExcel(r"C:\Users\yuyang\Documents\WeChat Files\yu957995353\FileStorage\File\2022-02\词条翻译1221\web国际化中英文翻译1221.xlsx","Sheet1")
+     for i in a.readUserPass():
+        print(i)
+
+
+
