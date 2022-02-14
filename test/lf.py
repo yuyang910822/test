@@ -2,10 +2,12 @@
 # @Time : 2022/2/11 15:58 
 # @Author : Yu yang
 # @File : lf.py
+import os.path
 import time
 
 import jsonpath
 
+from common.path import log_dir
 from core.core_business import Business_ability
 
 
@@ -152,7 +154,8 @@ class Lf(Business_ability):
                     self.log.error(f'拣货结果{r}')
 
 
-f = Lf(db='mysql', file='lifeng.log')
+f = Lf(db='mysql', file=os.path.join(log_dir,'lifeng.log'))
+print(os.path.join(log_dir,'lifeng.log'))
 while True:
     # f.depart()
     # f.theBox()

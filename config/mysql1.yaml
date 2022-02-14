@@ -1,0 +1,8 @@
+# 测试环境
+mysql:
+  host:
+  user:
+  password:
+  port:
+  charset:
+  database:
