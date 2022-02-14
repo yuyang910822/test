@@ -155,7 +155,6 @@ class Lf(Business_ability):
 
 
 f = Lf(db='mysql', file=os.path.join(log_dir,'lifeng.log'))
-print(os.path.join(log_dir,'lifeng.log'))
 while True:
     # f.depart()
     # f.theBox()
