@@ -118,7 +118,7 @@ class Lf(Business_ability):
         # 待拣货
         time.sleep(3)
         data = self.execute_sql("select pd.picking_qty - pd.picked_qty '需要拣的数量', task.id robotTaskId, pd.picking_id  "
-                                "pickingId, pd.id pickingDeatilId,pd.location_code  '货位' from "
+                                "pickingId, pd.id pickingDeatilId,task.robot_code from "
                                 "test_lifeng_rpm.t_robot_task_detail rtd, test_lifeng_rpm.t_robot_task task, "
                                 "test_lifeng_rpm.t_picking_detail pd where rtd.task_id = task.id and "
                                 "rtd.business_detail_id = pd.id and task.status = 200 and rtd.id in (select min(id) "
@@ -140,6 +140,17 @@ class Lf(Business_ability):
                         },
                         self.headers]
 
+        continue_data = [''.join([self.ip, 'rpm-server/picking/page/pick/continue']),
+                         {
+                             "pickingId": 6598,
+                             "robotCode": "018",
+                             "robotTaskId": 1642642,
+                             "pickingDetailId": 24856,
+                             "continuePick": False,
+                             "fulledUp": False
+                         },
+                        self.headers]
+
         if data is not None:
             if len(data) >= 0:
                 for i in data:
@@ -152,6 +163,15 @@ class Lf(Business_ability):
                     # 调接口出发
                     r = self.http_request(picking_data)
                     self.log.error(f'拣货结果{r}')
+                    print(jsonpath.jsonpath(r, "$..finished")[0])
+                    print(type(jsonpath.jsonpath(r, "$..finished")[0]))
+                    if jsonpath.jsonpath(r,"$..finished")[0]:
+                        continue_data[1]['pickingId'] = str(i[2])
+                        continue_data[1]['robotTaskId'] = str(i[1])
+                        continue_data[1]['pickingDetailId'] = str(i[3])
+                        continue_data[1]['robotCode'] = str(i[4])
+                        r = self.http_request(continue_data)
+                        self.log.error(f'去卸货{r}')
 
 
 f = Lf(db='mysql', file=os.path.join(log_dir,'lifeng.log'))
