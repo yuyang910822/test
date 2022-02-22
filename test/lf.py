@@ -163,9 +163,8 @@ class Lf(Business_ability):
                     # 调接口出发
                     r = self.http_request(picking_data)
                     self.log.error(f'拣货结果{r}')
-                    print(jsonpath.jsonpath(r, "$..finished")[0])
-                    print(type(jsonpath.jsonpath(r, "$..finished")[0]))
-                    if jsonpath.jsonpath(r,"$..finished")[0]:
+                    self.log.info(f'是否可以卸货：{jsonpath.jsonpath(r, "$..finished")[0]}')
+                    if jsonpath.jsonpath(r, "$..finished")[0]:
                         continue_data[1]['pickingId'] = str(i[2])
                         continue_data[1]['robotTaskId'] = str(i[1])
                         continue_data[1]['pickingDetailId'] = str(i[3])

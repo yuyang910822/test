@@ -37,11 +37,16 @@ class DoExcel:
         """
         return list(self.sheet.values)
 
+    def cv_file(self):
+        """
+        读取用户&密码
+        :return:
+        """
+        return list(self.sheet.values)
 
 if __name__ == "__main__":
-     a = DoExcel(r"C:\Users\yuyang\Documents\WeChat Files\yu957995353\FileStorage\File\2022-02\词条翻译1221\web国际化中英文翻译1221.xlsx","Sheet1")
-     for i in a.readUserPass():
-        print(i)
+     a = DoExcel(r"C:\Users\yuyang\Desktop\恒艺腾6个订单11.xlsx","Sheet1")
+     a.workbook.save(r"C:\Users\yuyang\Desktop\恒艺腾6个订单111.xlsx")
 
 
 
