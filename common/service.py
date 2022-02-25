@@ -10,14 +10,14 @@ from common.excel import DoExcel
 
 
 class Service:
-
-    def __init__(self, fpath, bname):
-        """
-
-        :param fpath: 文件路径
-        :param bname: 表单名称
-        """
-        self.userpass = DoExcel(fpath, bname).readUserPass()
+    #
+    # def __init__(self, fpath, bname):
+    #     """
+    #
+    #     :param fpath: 文件路径
+    #     :param bname: 表单名称
+    #     """
+    #     self.userpass = DoExcel(fpath, bname).readUserPass()
 
     @staticmethod
     def upload_file(host, password, file_name, remote_path, file_path):
@@ -50,7 +50,7 @@ class Service:
         ssh_client.close()
 
 
-def Cmd(cmd, fpath, bname):
+def Cmd(cmd, fpath=None, bname=None):
     """
     与远程服务器交互，执行linux命令
     多条命令格式：字符串内；分隔

@@ -11,7 +11,6 @@ class Excel(DoExcel):
         super(Excel, self).__init__(file, sheet)
 
 
-
 if __name__ == '__main__':
     rename = Excel(r"C:\Users\yuyang\Desktop\恒艺腾6个订单11.xlsx","Sheet1")
     rename.workbook.save(r"C:\Users\yuyang\Desktop\恒艺腾6个订单1111.xlsx")

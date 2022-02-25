@@ -22,3 +22,4 @@ mysql_dir = os.path.join(dirs, r'config\mysql.yaml')
 
 file_dir = os.path.join(dirs,r'file')
 
+erms_dir= os.path.join(dirs, r'data\erms_config')
