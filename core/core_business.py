@@ -12,12 +12,13 @@ from common.log import Log
 class Business_ability(Mysql, Log):
     """基础能力类"""
 
-    def __init__(self, db, file=None):
+    def __init__(self, db=None, file=None):
         self.data = readYaml('../config/url_data.yaml')
-        super().__init__(db)
+        if db is not None:
+            super().__init__(db)
         self.log = Log(file=file)
 
-    def http_request(self, loc):
+    def http_request(self,loc):
         """
         接口调用封装
         :param loc: 接口数据list
@@ -29,6 +30,25 @@ class Business_ability(Mysql, Log):
         self.log.info(f'{str(url).split("/")[-1]}请求体:{r.request.headers}')
         self.log.info(f'{str(url).split("/")[-1]}出参:{r.json()}')
         return r.json()
+
+    def re(self, data):
+        """
+        None不影响请求结果，达到通用场景的接口调用
+        :param data:
+        :return:
+        """
+        method = data.get("method")
+        url = data.get("url")
+        header = data.get("header")
+        json = data.get("json")
+
+        r = requests.request(url=url, method=method, headers=header, json=json)
+
+        self.log.info(f'{str(url).split("/")[-1]}入参:{r.request.body}')
+        self.log.info(f'{str(url).split("/")[-1]}请求体:{r.request.headers}')
+
+
+        return r
 
     def getRobotList(self):
         """

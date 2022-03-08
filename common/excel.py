@@ -45,8 +45,8 @@ class DoExcel:
         return list(self.sheet.values)
 
 if __name__ == "__main__":
-     a = DoExcel(r"C:\Users\yuyang\Desktop\恒艺腾6个订单11.xlsx","Sheet1")
-     a.workbook.save(r"C:\Users\yuyang\Desktop\恒艺腾6个订单222.xlsx")
+     a = DoExcel(r"C:\Users\yuyang\Desktop\边拣边分模板11.xlsx","Sheet1")
+     a.workbook.save(r"C:\Users\yuyang\Desktop\边拣边分模板111.xlsx")
 
 
 
