@@ -50,7 +50,7 @@ class Service:
         ssh_client.close()
 
 
-def Cmd(cmd, fpath=None, bname=None):
+def Cmd(cmd, user_pass=None, fpath=None, bname=None):
     """
     与远程服务器交互，执行linux命令
     多条命令格式：字符串内；分隔
@@ -59,7 +59,7 @@ def Cmd(cmd, fpath=None, bname=None):
     :param bname: execl表单名称
     :return:
     """
-    global user_pass
+
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     try:
