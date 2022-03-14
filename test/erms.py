@@ -104,6 +104,8 @@ if __name__ == '__main__':
     data["url"] = 'http://packages.forwardx.ai/download/04.Others/SW_OLY/RCS/ERMS/'
 
     print(f.get_version(data))
+    # for  i in f.get_version(data):
+    #     print(i.split('/')[-1])
 
     # 创建文件夹存放erms当前配置文件
     filename = os.system(fr'mkdir {userip[2]}')

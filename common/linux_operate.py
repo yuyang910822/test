@@ -79,7 +79,7 @@ class Linux:
         """
         与远程服务器交互，执行linux命令
         :param order: 多条命令格式：字符串内；分隔
-        :param login: 密码和ip
+        :param login: ip--/用户名--/密码
         :return:
         """
 
@@ -88,22 +88,26 @@ class Linux:
 
         for info in login:
             print('开始连接')
+
             if len(info) == 2:
-                client.connect(hostname=info[0], port=22, username=info[1])
+                client.connect(hostname=info[0], port=22, username=info[1], password=None)
             else:
                 client.connect(hostname=info[0], port=22, username=info[1], password=info[2])
             try:
+                print('执行命令')
+                # 如erms安装过程是否覆盖需要再sudo执行后输入是否确认
                 stdin, stdout, stderr = client.exec_command(order, get_pty=True)
-                if len(info) == 3:
-                    stdin.write(info[2] + '\n')  # 执行输入命令，输入sudo命令的密码，会自动执行
-                else:
-                    stdin.write('N' + '\n')  # 执行输入命令，输入sudo命令的密码，会自动执行
+                if len(info) >= 3:
+                    print('需要输入密码')
+                    stdin.write(info[-1] + '\n')  # 执行输入命令，输入sudo命令的密码，会自动执行
+                print('输出命令结果')
                 for line in stdout:
                     print(line.strip('\n'))
+
             except BaseException as e:
-                print('{}：执行失败'.format(info[0], e))
+                print('{}：执行失败{}'.format(info[0], e))
                 continue
-            client.close()
+        client.close()
 
 
 if __name__ == '__main__':

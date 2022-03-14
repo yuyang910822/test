@@ -45,8 +45,10 @@ class DoExcel:
         return list(self.sheet.values)
 
 if __name__ == "__main__":
-     a = DoExcel(r"C:\Users\yuyang\Desktop\边拣边分模板11.xlsx","Sheet1")
-     a.workbook.save(r"C:\Users\yuyang\Desktop\边拣边分模板111.xlsx")
+     a = DoExcel(r"C:\Users\yuyang\Desktop\【V1.47.0京东1.0】测试报告V1.0.xlsx","测试报告")
+     for i in a.readUserPass():
+         for j in i:
+             print(j)
 
 
 
