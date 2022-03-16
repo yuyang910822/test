@@ -7,7 +7,7 @@ import os
 import paramiko
 from paramiko.ssh_exception import AuthenticationException
 from scp import SCPClient
-
+from common.log import Log
 from common.excel import DoExcel
 
 
@@ -15,6 +15,9 @@ class Linux:
     """
     linux相关操作
     """
+
+    def __init__(self, file=None):
+        self.log = Log(file=file)
 
     def pull_file(self, login: list, remote_path: list, local_path: str):
         """
@@ -28,6 +31,7 @@ class Linux:
         ssh_client = paramiko.SSHClient()
         ssh_client.set_missing_host_key_policy(paramiko.AutoAddPolicy)
         # 会话对象需不需要密码
+
         if len(login) == 2:
             ssh_client.connect(port=22, username=login[1], hostname=login[0])
         else:
@@ -39,11 +43,11 @@ class Linux:
             try:
                 scpclient.get(remote_path=remote_file_path, local_path=local_path)
             except FileNotFoundError:
-                print("系统找不到指定文件" + remote_file_path)
+                self.log.error("系统找不到指定文件" + remote_file_path)
             except AuthenticationException:
-                print("身份验证失败：{}".format(login[0]))
+                self.log.error("身份验证失败：{}".format(login[0]))
             else:
-                print(f'{remote_file_path}文件已存入本地路径{local_path}')
+                self.log.info(f'{remote_file_path}文件已存入本地路径{local_path}')
         ssh_client.close()
 
     def push_file(self, local_path: str, login: list, remote_path: str):
@@ -69,10 +73,10 @@ class Linux:
                 try:
                     scpclient.put(files=local_file, remote_path=remote_path)
                 except FileNotFoundError as e:
-                    print("系统找不到指定文件" + local_file)
+                    self.log.error("系统找不到指定文件" + local_file)
                 except AuthenticationException as e:
-                    print("身份验证失败：{}".format(info[0]))
-                print('推送成功')
+                    self.log.error("身份验证失败：{}".format(info[0]))
+                self.log.info('推送成功')
         ssh_client.close()
 
     def linux_order(self, login, order):
@@ -87,25 +91,25 @@ class Linux:
         client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
 
         for info in login:
-            print('开始连接')
+            self.log.info('开始连接')
 
             if len(info) == 2:
                 client.connect(hostname=info[0], port=22, username=info[1], password=None)
             else:
                 client.connect(hostname=info[0], port=22, username=info[1], password=info[2])
             try:
-                print('执行命令')
+                self.log.info('执行命令')
                 # 如erms安装过程是否覆盖需要再sudo执行后输入是否确认
                 stdin, stdout, stderr = client.exec_command(order, get_pty=True)
                 if len(info) >= 3:
-                    print('需要输入密码')
+                    self.log.info('需要输入密码')
                     stdin.write(info[-1] + '\n')  # 执行输入命令，输入sudo命令的密码，会自动执行
-                print('输出命令结果')
+                    self.log.info('输出命令结果')
                 for line in stdout:
                     print(line.strip('\n'))
 
             except BaseException as e:
-                print('{}：执行失败{}'.format(info[0], e))
+                self.log.error('{}：执行失败{}'.format(info[0], e))
                 continue
         client.close()
 
