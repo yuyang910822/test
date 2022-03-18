@@ -108,6 +108,7 @@ class Linux:
                 for line in stdout:
                     print(line.strip('\n'))
 
+
             except BaseException as e:
                 self.log.error('{}：执行失败{}'.format(info[0], e))
                 continue

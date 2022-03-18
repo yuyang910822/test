@@ -17,10 +17,10 @@ class Agent(Linux):
         :param login: 可以手写或读取
         :return:
         """
-        download_agent = f'cd /home/ld;wget {input("请输入下载连接:")} --no-check-certificate'
+        download_agent = f'cd /home/ld;sudo wget {input("请输入下载连接:")} --no-check-certificate'
         self.log.info(download_agent)
         # 下载agnet
-        f = self.linux_order(login, download_agent)
+        # f = self.linux_order(login, download_agent)
         # 安装agent
         package = download_agent.split('/')[-1].split(' ')[0]
         self.log.info(package)
@@ -36,4 +36,4 @@ if __name__ == '__main__':
     # 以列表嵌套格式存储多个AMR信息，单台AMR也需要遵守
     # list[['地址', '用户名'，'密码']]
     install = Agent(file='../log/agent.log')
-    install.agent_install([['10.3.1.174', 'ld', 'ld']])
+    install.agent_install([['10.3.0.230', 'ld', 'ld']])
