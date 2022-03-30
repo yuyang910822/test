@@ -95,20 +95,16 @@ if __name__ == '__main__':
     from common.readYaml import *
     from common.path import *
 
-    f = Erms()
+    f = Erms(file='../log/erms.log')
 
-    # 生成存放从erms拉取的配置文件路径
-    path = os.path.join(erms_dir, str(int(time.time())))
-
-    # 创建文件夹存放erms当前配置文件
-    filename = os.system(fr'mkdir {path}')
-
-    # 用户名&ip
     userip = ['root', '10.8.12.157']
-
-    # 组合接口请求数据
+    path = os.path.join(erms_dir, str(int(time.time())))
+    f.log.info(f'存放服务器获取的文件夹路径:{path}')
+    filename = os.system(fr'mkdir {path}')
+    f.log.info('创建文件夹')
     data = readYaml(url_dir)["ermsPackage"]
     data["url"] = input('请输入下载地址：')
+    f.log.info('下载')
 
     # 获取服务器配置文件到本地文件夹
     f.download_upload_config(userip, path, judge=True)

@@ -25,10 +25,9 @@ class Agent(Linux):
         package = download_agent.split('/')[-1].split(' ')[0]
         self.log.info(package)
         install_agent = f'sudo systemctl stop a4stack-erms-agent.service;' \
-                        f'cd /home/ld;' \
+                        f'pwd;' \
                         f'sudo dpkg -i {package};' \
-                        f'sudo systemctl restart a4stack-erms-agent.service;' \
-                        f'sudo systemctl status a4stack-erms-agent.service'
+                        f'sudo systemctl restart a4stack-erms-agent.service'
         self.linux_order(login, install_agent)
 
 
@@ -36,4 +35,5 @@ if __name__ == '__main__':
     # 以列表嵌套格式存储多个AMR信息，单台AMR也需要遵守
     # list[['地址', '用户名'，'密码']]
     install = Agent(file='../log/agent.log')
-    install.agent_install([['10.3.0.230', 'ld', 'ld']])
+    install.agent_install([['10.3.2.217', 'ld', 'ld'],
+                           ['10.3.1.174', 'ld', 'ld']])
