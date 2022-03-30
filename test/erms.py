@@ -97,33 +97,36 @@ if __name__ == '__main__':
 
     f = Erms()
 
+    # 生成存放从erms拉取的配置文件路径
     path = os.path.join(erms_dir, str(int(time.time())))
-    data = readYaml(url_dir)["ermsPackage"]
-    userip = ['root', '10.3.4.169']
-    # data["url"] = input('请输入下载地址：')
-    data["url"] = 'http://packages.forwardx.ai/download/04.Others/SW_OLY/RCS/ERMS/'
-
-    print(f.get_version(data))
-    # for  i in f.get_version(data):
-    #     print(i.split('/')[-1])
 
     # 创建文件夹存放erms当前配置文件
-    filename = os.system(fr'mkdir {userip[2]}')
+    filename = os.system(fr'mkdir {path}')
+
+    # 用户名&ip
+    userip = ['root', '10.8.12.157']
+
+    # 组合接口请求数据
+    data = readYaml(url_dir)["ermsPackage"]
+    data["url"] = input('请输入下载地址：')
+
     # 获取服务器配置文件到本地文件夹
     f.download_upload_config(userip, path, judge=True)
 
     # 下载各个依赖包
-    for i in data:
+    for i in f.get_version(data):
         cmd = f'cd /home/ld;sudo mkdir yy;cd yy;wget {i}'
         f.install(data=userip, cmd=cmd)
 
     # 安装各个依赖包
-    for i in data:
-        if i.split("ERMS/")[1].split('.')[-1] == 'rpm':
-            cmd1 = f'cd /home/ld/yy;sudo rpm -Uvh {i.split("ERMS/")[1]};n'
+    'http://packages.forwardx.ai/download/02.RCS/v1.11/Internal/1.11_Test35_LFYJ/ERMS/'
+    for i in f.get_version(data):
+        print(i)
+        if i.split('.')[-1] == 'rpm':
+            cmd1 = f'cd /home/ld/yy;sudo rpm -Uvh {i.split("ERMS/")[-1]};n'
             f.install(data=userip, cmd=cmd1)
-        else:
-            cmd1 = f'cd /home/ld/yy;sudo dpkg -i {i.split("ERMS/")[1]};n'
+        elif i.split('.')[-1] == 'deb':
+            cmd1 = f'cd /home/ld/yy;sudo dpkg -i {i.split("ERMS/")[-1]};n'
             f.install(data=userip, cmd=cmd1)
 
     # 本地配置文件推送服务器指定位置

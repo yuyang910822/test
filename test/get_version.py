@@ -16,5 +16,6 @@ def erms_version():
     for name, version in dict(zip(jsonpath.jsonpath(data, '$..name'), jsonpath.jsonpath(data, '$..version'))).items():
         print(name+": "+version)
 
+if __name__ == '__main__':
 
-erms_version()
+    erms_version()

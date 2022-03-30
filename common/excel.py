@@ -1,6 +1,7 @@
 import openpyxl
 from openpyxl.worksheet.worksheet import Worksheet
 
+
 # from common.mysql import Mysql
 
 
@@ -15,7 +16,7 @@ class DoExcel:
         self.file = file_name
         self.sheet = sheet_name
         self.workbook = openpyxl.load_workbook(self.file)
-        self.sheet:Worksheet = self.workbook[self.sheet]
+        self.sheet: Worksheet = self.workbook[self.sheet]
 
     def readTestData(self):
         """读取测试数据"""
@@ -25,6 +26,7 @@ class DoExcel:
             value = dict(zip(data[0], i))
             if list(value.values())[0] is not None:
                 testData.append(value)
+        return testData
 
     def close(self):
         """关闭工作薄对象，释放内存"""
@@ -44,10 +46,12 @@ class DoExcel:
         """
         return list(self.sheet.values)
 
+
 if __name__ == "__main__":
-
-     a = DoExcel(r"C:\Users\yuyang\Desktop\边拣边分模板111.xlsx", "Sheet1")
-     a.workbook.save(r"C:\Users\yuyang\Desktop\边拣边分模板2111.xlsx")
-
-
-
+    # flie = DoExcel(r"C:\Users\yuyang\Desktop\测试\测试报告\【V1.51.0利丰1.0】测试报告V1.xlsx", "测试报告")
+    flie = DoExcel(r"C:\Users\yuyang\Desktop\测试\excel\利丰excel\非单品单件1个格口.xlsx", "Sheet1")
+    flie.workbook.save(r"C:\Users\yuyang\Desktop\测试\excel\利丰excel\非单品单件2.xlsx")
+    # for i in flie.readUserPass():
+    #     for j in i:
+    #         if j != None:
+    #             print(j)
