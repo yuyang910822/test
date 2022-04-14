@@ -73,7 +73,7 @@ class Erms(Business_ability):
 
     def install(self, data, cmd):
         """
-        :param data: 连接的服务器数据--> list
+        :param data: 连接地址--> list
         :return:
         """
         client = paramiko.SSHClient()
@@ -87,7 +87,7 @@ class Erms(Business_ability):
             for line in stdout:
                 print(line.strip('\n'))
         except:
-            print('{}：执行失败'.format(data[1]))
+            print('{}：执行失败'.format(data[1],line))
             client.close()
 
 
@@ -115,7 +115,7 @@ if __name__ == '__main__':
         f.install(data=userip, cmd=cmd)
 
     # 安装各个依赖包
-    'http://packages.forwardx.ai/download/02.RCS/v1.11/Internal/1.11_Test35_LFYJ/ERMS/'
+    # 'http://packages.forwardx.ai/download/02.RCS/v1.11/Internal/1.11_Test35_LFYJ/ERMS/'
     for i in f.get_version(data):
         print(i)
         if i.split('.')[-1] == 'rpm':

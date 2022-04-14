@@ -49,8 +49,8 @@ class DoExcel:
 
 if __name__ == "__main__":
     # flie = DoExcel(r"C:\Users\yuyang\Desktop\测试\测试报告\【V1.51.0利丰1.0】测试报告V1.xlsx", "测试报告")
-    flie = DoExcel(r"C:\Users\yuyang\Desktop\测试\excel\利丰excel\非单品单件1个格口.xlsx", "Sheet1")
-    flie.workbook.save(r"C:\Users\yuyang\Desktop\测试\excel\利丰excel\非单品单件2.xlsx")
+    flie = DoExcel(r"C:\Users\yuyang\OneDrive - ForwardX Robotics\桌面\拣选单类型.xlsx", "Sheet1")
+    flie.workbook.save(r"C:\Users\yuyang\OneDrive - ForwardX Robotics\桌面\拣选单类型1.0.xlsx")
     # for i in flie.readUserPass():
     #     for j in i:
     #         if j != None:

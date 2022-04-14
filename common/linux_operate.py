@@ -15,6 +15,7 @@ class Linux:
     """
     linux相关操作
     """
+    stdout_info: list = []
 
     def __init__(self, file=None):
         self.log = Log(file=file)
@@ -79,6 +80,8 @@ class Linux:
                 self.log.info('推送成功')
         ssh_client.close()
 
+
+
     def linux_order(self, login, order):
         """
         与远程服务器交互，执行linux命令
@@ -89,7 +92,7 @@ class Linux:
 
         client = paramiko.SSHClient()
         client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-
+        stdout_info: list = []
         for info in login:
             self.log.info('开始连接')
 
@@ -105,14 +108,16 @@ class Linux:
                     self.log.info('需要输入密码')
                     stdin.write(info[-1] + '\n')  # 执行输入命令，输入sudo命令的密码，会自动执行
                     self.log.info('输出命令结果')
-                for line in stdout:
-                    print(line.strip('\n'))
 
+                for line in stdout:
+                    stdout_info.append(line)
+                    print(line.strip('\n'))
 
             except BaseException as e:
                 self.log.error('{}：执行失败{}'.format(info[0], e))
                 continue
         client.close()
+        return stdout_info
 
 
 if __name__ == '__main__':

@@ -21,11 +21,10 @@ class Amr(Linux):
         # self.log.info(download_order)
         # # 下载单机
         # f = self.linux_order(login, download_order)
-        self.linux_order(login, 'cd home/ld;dpkg -l|grep ros-kinetic-raccoon-universal')
 
         # install_order = 'cd /home/ld;'
 
 
 if __name__ == '__main__':
     f = Amr()
-    f.amr_install([["10.3.1.174", "ld", "ld"]])
+    f.amr_install([["10.3.2.163", "ld", "ld"]])
