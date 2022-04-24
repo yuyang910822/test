@@ -19,16 +19,17 @@ def count_Di():
     data = []
     j = jira.JIRA(server="https://issue.forwardx.ai", basic_auth=(username, password))
     # 循环筛选条件
-    for issue in j.search_issues(f'reporter in (currentUser()) AND '
-                                 f'text ~ "{calculate_result}" ORDER BY status ASC, updated DESC'):
+    for issue in j.search_issues(f'reporter in (currentUser()) AND text ~ {search_info} ORDER BY status ASC, updated DESC'):
         issues = j.issue(issue)
+
         # 获取对应问题单的状态
         if str(issues.fields.status) == '修改实施':
             # print(issues.key, issues.fields.status)
             # 获取对应状态的严重程度
             info = jsonpath.jsonpath(issues.raw, '$..customfield_10733')[0]['value']
+            title = jsonpath.jsonpath(issues.raw,'$..summary')[0]
 
-            print(issues.key,  info)
+            print(issues.key, title, info)
             data.append(info)
 
     for k, v in calculate.items():
@@ -36,5 +37,7 @@ def count_Di():
         calculate_result += (decimal.Decimal(str(data.count(k))) * decimal.Decimal(str(v)))
 
     print(f'\n\n参考上述遗留修改实施的问题，计算DI值为：{calculate_result}')
+
+
 if __name__ == '__main__':
     count_Di()
