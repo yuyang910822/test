@@ -19,8 +19,8 @@ def count_Di():
     data = []
     j = jira.JIRA(server="https://issue.forwardx.ai", basic_auth=(username, password))
     # 循环筛选条件
-    for issue in j.search_issues(f'assignee in (currentUser()) AND reporter in (currentUser()) '
-                                 f'AND text ~ "{search_info}" ORDER BY status ASC, updated DESC'):
+    for issue in j.search_issues(f'reporter in (currentUser()) AND '
+                                 f'text ~ "{calculate_result}" ORDER BY status ASC, updated DESC'):
         issues = j.issue(issue)
         # 获取对应问题单的状态
         if str(issues.fields.status) == '修改实施':
