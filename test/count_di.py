@@ -24,7 +24,6 @@ def count_Di():
 
         # 获取对应问题单的状态
         if str(issues.fields.status) == '修改实施':
-            # print(issues.key, issues.fields.status)
             # 获取对应状态的严重程度
             info = jsonpath.jsonpath(issues.raw, '$..customfield_10733')[0]['value']
             title = jsonpath.jsonpath(issues.raw,'$..summary')[0]
